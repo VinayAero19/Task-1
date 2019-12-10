@@ -1,42 +1,38 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField]
-    private Transform goal;
+
+    public Transform goal;
+    private NavMeshAgent agent;
     private Animator anim;
     private bool mrunning = false;
+    private bool shoot;
+    
 
     void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-        var playerAgent = GetComponent<NavMeshAgent>();
-        playerAgent.destination = goal.position;
+        agent.destination = goal.position;
         mrunning = true;
-        anim.SetBool("running", mrunning);
 
-        if(playerAgent.remainingDistance > playerAgent.stoppingDistance)
-        {
-            mrunning = false;
-            anim.SetBool("running", mrunning);
-        }
 
     }
-
-    
-
-    
-
-
     void Update()
     {
-  
+ 
+        if(agent.remainingDistance < agent.stoppingDistance)
+        {
+            mrunning = false;
+            shoot = true;
+            anim.SetTrigger("shoot");
+
+        }
+        anim.SetBool("running", mrunning);
+        
+
 
     }
-
-}  
-    
-
+}
