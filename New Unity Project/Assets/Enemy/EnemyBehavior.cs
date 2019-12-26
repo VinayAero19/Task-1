@@ -6,11 +6,16 @@ public class EnemyBehavior : MonoBehaviour
 {
     public Transform player;
     static Animator anim;
-    
-   public   void Start()
+    public Rigidbody bullet;
+    public Transform firepoint;
+    public int damage = 50;
+    public float bulletspeed;
+
+    public   void Start()
     {
         
         anim = GetComponent<Animator>();
+      
     }
 
  
@@ -23,7 +28,7 @@ public class EnemyBehavior : MonoBehaviour
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(direction), 0.1f);
 
             anim.SetBool("isIdle", false);
-           if(direction.magnitude > 5)
+            if(direction.magnitude > 5)
             {
                 this.transform.Translate(0, 0, 0.05f);
                 anim.SetBool("isWalking", true);
@@ -31,6 +36,8 @@ public class EnemyBehavior : MonoBehaviour
             else
             {
                 anim.SetBool("attack", true);
+              
+
                 anim.SetBool("isWalking", false);
             }
         }
@@ -42,6 +49,8 @@ public class EnemyBehavior : MonoBehaviour
            
         }
     }
-    
+
+   
+
 
 }
